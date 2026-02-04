@@ -1,4 +1,4 @@
-package com.example.czas;
+package com.example.nowe;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
@@ -14,7 +14,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.czas.databinding.ActivityMainBinding;
+import com.example.nowe.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -83,20 +83,19 @@ public class MainActivity extends AppCompatActivity {
         {
             osobyToShow = osoby;
         }
-        else
-        {
+        else {
             osobyToShow = new ArrayList<>();
             for (Osoba osoba :
                     osoby) {
-                if (osoba.data.get(Calendar.MONTH) == binding.spinner.getSelectedItemPosition())
-                {
+                if (osoba.data.get(Calendar.MONTH) == binding.spinner.getSelectedItemPosition()-1) {
                     osobyToShow.add(osoba);
                 }
             }
         }
-        Toast.makeText(this,String.valueOf(osobyToShow.size()) , Toast.LENGTH_SHORT).show();
+        adapter = new ArrayAdapter<Osoba>(MainActivity.this, android.R.layout.simple_list_item_1,osobyToShow);
+        binding.lista.setAdapter(adapter);
 
-        adapter.notifyDataSetChanged();
+
     }
 
     private void picker() {
@@ -105,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                 calendar.set(Calendar.DAY_OF_MONTH, i2);
-                calendar.set(Calendar.MONTH, i1+1);
+                calendar.set(Calendar.MONTH, i1);
                 calendar.set(Calendar.YEAR, i);
             }
         }, 2026, 0, 1);
@@ -113,6 +112,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void confirm() {
+        if (calendar==null)
+        {
+            calendar = Calendar.getInstance();
+        }
         osoby.add(new Osoba(binding.name.getText().toString(),calendar));
         ShowList();
     }

@@ -1,4 +1,4 @@
-package com.example.czas;
+package com.example.nowe;
 
 import androidx.annotation.NonNull;
 
@@ -17,6 +17,6 @@ public class Osoba {
     @Override
     public String
     toString() {
-        return name + " " + data.get(Calendar.DAY_OF_MONTH) + " " + data.get(Calendar.MONTH);
+        return name + " " + data.get(Calendar.DAY_OF_MONTH) + "." + (data.get(Calendar.MONTH)+1);
     }
 }
